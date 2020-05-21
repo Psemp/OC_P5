@@ -1,2 +1,2 @@
 # OC_P5
-openclassrooms_python_project5
+Utilisez les données publiques de l'OpenFoodFacts
