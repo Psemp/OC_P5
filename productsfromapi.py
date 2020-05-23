@@ -11,15 +11,27 @@ class Product:
         self.nutriscore = nutriscore
         self.stores = stores
 
-# class Category:
+class Unsorted:
 
-#     def __init__(self):
-#         self.name = str
-#         self.translated_name = str
+    def __init__(self, barcode, maincat, secondcat):
+        self.barcode = barcode
+        self.maincat = maincat
+        self.secondcat = secondcat
+        del self.secondcat[-1]
+
+class Category:
+
+    def __init__(self, number):
+        self.maincat = 'maincat'
+        self.identifier = number
+        self.secondcat = []
+        self.barcode_list = []
 
 category_dict = dict()
 alert_dict = dict()
 product_list = []
+unsorted_list = []
+category_list = []
 
 page_api = 1
 sample_size = int
@@ -39,7 +51,7 @@ while len(product_list) < sample_size:
             print(raw_product['_id']) ##CONTROL##
 
             product_list.append(Product(raw_product['_id'], raw_product['product_name'], raw_product['brands'], raw_product['nutriscore_grade'], raw_product['stores']))
-
+            unsorted_list.append(Unsorted(raw_product['_id'],raw_product['categories_hierarchy'][-1],raw_product['categories_hierarchy']))
             category_dict[raw_product['_id']] = raw_product['categories_hierarchy']
 
             # if 'labels' in raw_product:
@@ -51,8 +63,39 @@ while len(product_list) < sample_size:
     print(page_api)
     print(url)
 
-for product in product_list:
-    print(product.barcode, product.name, product.nutriscore.upper)
+nbr = 1
+identifier = f'id{nbr}'
+
+while nbr <= len(unsorted_list):
+    identifier = Category(nbr)
+    category_list.append(identifier)
+    nbr +=1
+    print(identifier, identifier.maincat)
+
+nbr = 1
+
+for unsortedcat in unsorted_list:
+    for sortedcat in category_list:
+        if unsortedcat.maincat == sortedcat.maincat:
+            sortedcat.barcode_list.append(unsortedcat.barcode)
+            sortedcat.secondcat.append(unsortedcat.secondcat)
+            print('if in loop')
+        else:
+            sortedcat.maincat = unsortedcat.maincat
+            sortedcat.secondcat = unsortedcat.secondcat
+            sortedcat.barcode_list.append(unsortedcat.barcode)
+            del unsorted_list[unsortedcat]
+            print('else in loop')
+        nbr += 1
+
+
+# PRINTS
+
+# for product in product_list:
+#     print(product.barcode, product.name, product.nutriscore)
+
+for category in category_list:
+    print(category.maincat, category.secondcat)
 
 ##CONTROLS##
 # print(category_dict)
