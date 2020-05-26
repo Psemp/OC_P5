@@ -2,6 +2,7 @@
 import json
 import requests
 
+
 class Product:
 
     def __init__(self, barcode, name, brand, nutriscore, stores):
@@ -10,6 +11,7 @@ class Product:
         self.brand = brand
         self.nutriscore = nutriscore
         self.stores = stores
+
 
 class Category:
 
