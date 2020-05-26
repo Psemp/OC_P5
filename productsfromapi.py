@@ -11,25 +11,14 @@ class Product:
         self.nutriscore = nutriscore
         self.stores = stores
 
-class Unsorted:
-
-    def __init__(self, barcode, maincat, secondcat):
-        self.barcode = barcode
-        self.maincat = maincat
-        self.secondcat = secondcat
-        del self.secondcat[-1]
-        del self.secondcat[-2]
-        self.used = False
-
 class Category:
 
     def __init__(self, number):
-        self.maincat = 'maincat'
-        self.identifier = number
-        self.secondcat = []
-        self.barcode_list = []
+        self.web_id = web_id
+        self.display_name = name
+        self.link = link
 
-category_dict = dict()
+
 alert_dict = dict()
 product_list = []
 unsorted_list = []
@@ -55,10 +44,6 @@ while len(product_list) < sample_size:
             product_list.append(Product(raw_product['_id'], raw_product['product_name'], raw_product['brands'], raw_product['nutriscore_grade'], raw_product['stores']))
             unsorted_list.append(Unsorted(raw_product['_id'],raw_product['categories_hierarchy'][-2],raw_product['categories_hierarchy']))
             category_dict[raw_product['_id']] = raw_product['categories_hierarchy']
-
-            # if 'labels' in raw_product:
-            #     alert_dict[raw_product['_id']] = raw_product['labels']
-
     page_api = page_api + 1
 
     ##CONTROLS##
