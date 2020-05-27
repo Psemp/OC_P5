@@ -27,10 +27,6 @@ category_list = []
 
 page_api = 1
 
-
-# print("sample size ?")
-# sample_size = int(input())
-
 category_url = 'https://fr-fr.openfoodfacts.org/categories.json'
 r = requests.get(category_url)
 category_page = r.json()
