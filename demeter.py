@@ -81,7 +81,7 @@ for category in reversed(category_list):
     products_analyzed = 0
     user_defined_limit = 100
 
-    while page_api < 2:  # (category.amount/20):
+    while page_api < 3:  # (category.amount/20):
         formatted_url = category.link + f'/{page_api}.json'
         r = requests.get(formatted_url)
         productlist_page = r.json()
@@ -89,7 +89,7 @@ for category in reversed(category_list):
         print(formatted_url)
 
         for web_product in productlist_page['products']:
-            print('checkpoint3')
+            # print('checkpoint3')
 
             if SectionsInProduct(web_product) and BarcodeTest:
 
@@ -105,10 +105,10 @@ for category in reversed(category_list):
                     pass
                 products_analyzed += 1
 
-            print('checkpoint4')
+            # print('checkpoint4')
         page_api += 1
 
-        print('checkpoint5')
+        # print('checkpoint5')
 
 for product in product_list:
     print(product.name)
