@@ -1,12 +1,13 @@
 import mysql.connector
 from sql_db_creation import Create_Dbs
 from data_insertion import Insert_data
+from demeter import product_list, category_list
 
 db = mysql.connector.connect(
     user='root',
-    password="somepassword",
+    password="06022018",
     host="localhost",
-    passwd="somepassword",
+    passwd="06022018",
     database="Project5_db",
     auth_plugin='mysql_native_password'
     )
