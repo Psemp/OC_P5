@@ -40,15 +40,24 @@ def FiltersOnId(catid):
 
 
 def FiltersOnProductCnt(number):
-    if number > 200 and number < 5000:
+    if number > 200 and number < 5500:
         return True
     else:
         return False
 
 
+def FilterOnTranslation(catname):
+    if catname[2] == ":":
+        return False
+    else:
+        return True
+
+
 def BarcodeTest(barcode):
     if len(barcode) == 13:
         return True
+    elif len(barcode) < 13:
+        return False
     else:
         return False
 
@@ -62,7 +71,7 @@ def SectionsInProduct(prod):
 
 for web_category in category_page['tags']:
 
-    if FiltersOnProductCnt(web_category['products']) and FiltersOnId(web_category['id']):
+    if FiltersOnProductCnt(web_category['products']) and FiltersOnId(web_category['id']) and FilterOnTranslation(web_category['name']):
         category_list.append(Category(web_category['id'], web_category['name'], web_category['url'], web_category['products']))
 
 print('checkpoint1')

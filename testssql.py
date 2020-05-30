@@ -18,6 +18,10 @@ Create_Dbs(mycursor)
 
 Insert_data(mycursor, product_list, category_list)
 
+mycursor.execute("""DELETE FROM Product_table
+WHERE Product_id < 1000000000000""")
+
+
 cnx.commit()
 
 mycursor.close()
