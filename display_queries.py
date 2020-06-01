@@ -16,25 +16,21 @@ class User:
 
     def __init__(self):
         self.category_choice = 0
-        self.product_choice = 0  # Id of product
-        self.choice_mage = False
+        self.category_id = 0
+        self.product_choice = 0
+        self.id_of_selection = 0
 
 
-class System:
-
-    def __init__(self):
-        self.current_page = 0
-        self.total_pages = 0
-        self.keep_printing = True
-
-
+displayed_categories = []
+displayed_products = []
 display_limit = 10
 userA = User()
-category_sys = System()
-product_sys = System()
+categories_seen = 0
+products_seen = 0
 
 
 def CategorySelection(cursor):
+    global categories_seen
     mycursor.execute("SELECT Translated_name, Category_id FROM Category_table")
     result = mycursor.fetchall()
 
@@ -44,23 +40,62 @@ def CategorySelection(cursor):
 
     for chunk in sublist_categories:
 
+        idientifier = 1
         for sublist in sublist_categories[chunk_index]:
-
-            print(sublist)
-
-        userA.category_choice = input("Select Category Via its ID : ")
+            print(sublist[0], idientifier)  # Sublist[1] = Category ID, no need to show, need to know
+            displayed_categories.append(sublist)
+            idientifier += 1
+        userA.category_choice = int(input("Select Category Via its ID (0 -> next page) : "))
+        if userA.category_choice != 0:
+            return
+        else:
+            categories_seen += 10
         print('end of list')
         chunk_index += 1
 
 
 def ProductDisplay(cursor):
-    mycursor.execute(f"SELECT * FROM Product_table WHERE Category_id = {userA.category_choice}")
+    global products_seen
+    mycursor.execute(f"SELECT Product_name, Product_id FROM Product_table WHERE Category_id = {userA.category_choice + products_seen}")
     result = mycursor.fetchall()
-    number_identifier = 1
-    for row in result:
-        print(row[1], number_identifier)
-        number_identifier += 1
+
+    chunk_index = 0
+
+    sublist_producuts = [result[x:x+10] for x in range(0, len(result), 10)]
+
+    for chunk in sublist_producuts:
+
+        idientifier = 1
+        for sublist in sublist_producuts[chunk_index]:
+            print(sublist[0], idientifier) # Sublist[1] = Product ID, no need to show, need to know
+            displayed_products.append(sublist)
+            idientifier += 1
+        userA.product_choice = int(input("Select Product Via its ID (0 -> next page) : "))
+        if userA.product_choice != 0:
+            return
+        else:
+            products_seen += 10
+        print('end of list')
+        chunk_index += 1
 
 
 CategorySelection(mycursor)
 ProductDisplay(mycursor)
+
+print(displayed_categories)
+selection_c = displayed_categories[userA.category_choice + categories_seen - 1]
+selection_p = displayed_products[userA.product_choice + products_seen - 1]
+print(selection_c, selection_p)
+userA.id_of_selection = selection_p[1]
+print(userA.id_of_selection)
+
+
+mycursor.execute(f"SELECT Nutriscore FROM Product_table WHERE Product_id = {userA.id_of_selection}")
+origin_nutriscore = mycursor.fetchall()
+origin_nutriscore = ''.join(origin_nutriscore[0])
+
+mycursor.execute(f"SELECT Product_name, Nutriscore FROM Product_table WHERE Nutriscore < '{origin_nutriscore}' and Category_id = {userA.category_choice + products_seen}")
+comparison = mycursor.fetchall()
+
+for product in comparison:
+    print(product)
