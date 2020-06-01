@@ -16,10 +16,14 @@ mycursor = cnx.cursor()
 
 Create_Dbs(mycursor)
 
-Insert_data(mycursor, product_list, category_list)
+print("Recreate database ? (y/n)")
+user_answer = input()
 
-mycursor.execute("""DELETE FROM Product_table
-WHERE Product_id < 1000000000000""")
+if user_answer == 'y':
+    Insert_data(mycursor, product_list, category_list)
+
+    mycursor.execute("""DELETE FROM Product_table
+    WHERE Product_id < 1000000000000""")
 
 
 cnx.commit()
