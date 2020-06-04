@@ -42,10 +42,10 @@ def CategorySelection(cursor):
 
         idientifier = 1
         for sublist in sublist_categories[chunk_index]:
-            print(sublist[0], idientifier)  # Sublist[1] = Category ID, no need to show, need to know
+            print(sublist[0], idientifier)
             displayed_categories.append(sublist)
             idientifier += 1
-        userA.category_choice = int(input("Select Category Via its ID (0 -> next page) : "))
+        userA.category_choice = int(input("Select # (0 -> next page) : "))
         if userA.category_choice != 0:
             return
         else:
@@ -67,10 +67,10 @@ def ProductDisplay(cursor):
 
         idientifier = 1
         for sublist in sublist_producuts[chunk_index]:
-            print(sublist[0], idientifier) # Sublist[1] = Product ID, no need to show, need to know
+            print(sublist[0], idientifier)
             displayed_products.append(sublist)
             idientifier += 1
-        userA.product_choice = int(input("Select Product Via its ID (0 -> next page) : "))
+        userA.product_choice = int(input("Select category # (0 next) : "))
         if userA.product_choice != 0:
             return
         else:
@@ -94,7 +94,7 @@ mycursor.execute(f"SELECT Nutriscore FROM Product_table WHERE Product_id = {user
 origin_nutriscore = mycursor.fetchall()
 origin_nutriscore = ''.join(origin_nutriscore[0])
 
-mycursor.execute(f"SELECT Product_name, Nutriscore FROM Product_table WHERE Nutriscore < '{origin_nutriscore}' and Category_id = {userA.category_choice + products_seen}")
+mycursor.execute(f"SELECT Product_name, Nutriscore FROM Product_table WHERE Nutriscore < '{origin_nutriscore}' and Category_id = {userA.category_choice + categories_seen}")
 comparison = mycursor.fetchall()
 
 for product in comparison:
