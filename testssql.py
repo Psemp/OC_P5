@@ -1,7 +1,7 @@
 import mysql.connector
 from sql_db_creation import Create_Dbs
 from data_insertion import Insert_data
-from demeter import product_list, category_list
+from request_script import product_list, category_list
 
 cnx = mysql.connector.connect(
     user='root',
