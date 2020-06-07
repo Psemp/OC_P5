@@ -1,10 +1,12 @@
 import mysql.connector
 
+usr_pwd = input("Please enter password : ")
+
 cnx = mysql.connector.connect(
     user='root',
-    password="06022018",
+    password=usr_pwd,
     host="localhost",
-    passwd="06022018",
+    passwd=usr_pwd,
     database="Project5_db",
     auth_plugin='mysql_native_password'
     )
