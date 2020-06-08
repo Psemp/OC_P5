@@ -6,7 +6,6 @@ cnx = mysql.connector.connect(
     user='root',
     password=usr_pwd,
     host="localhost",
-    passwd=usr_pwd,
     database="Project5_db",
     auth_plugin='mysql_native_password'
     )
