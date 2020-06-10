@@ -1,5 +1,5 @@
 import mysql.connector
-from sql_db_creation import Create_Dbs
+from sql_executor import database_creation
 from data_insertion import Insert_data
 from request_script import product_list, category_list
 
@@ -15,15 +15,14 @@ cnx = mysql.connector.connect(
     )
 
 mycursor = cnx.cursor()
-
-Create_Dbs(mycursor)
+user_exit = False
 
 print("Recreate database ? (y/n)")
 user_answer = input()
 
 if user_answer == 'y':
+    # database_creation(mycursor)
     Insert_data(mycursor, product_list, category_list)
-
     mycursor.execute("""DELETE FROM Product_table
     WHERE Product_id < 1000000000000""")
 

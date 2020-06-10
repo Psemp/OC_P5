@@ -13,7 +13,9 @@ cnx = mysql.connector.connect(
 mycursor = cnx.cursor()
 
 
-with open('db_creation_script.sql') as sql:
-    db_creation = sql.read()
+def database_creation(cursor):
 
-mycursor.execute(db_creation, multi=True)
+    with open('db_creation_script.sql') as sql:
+        db_creation = sql.read()
+
+    cursor.execute(db_creation, multi=True)

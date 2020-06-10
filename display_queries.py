@@ -1,4 +1,5 @@
 import mysql.connector
+import datetime
 
 usr_pwd = input("Please enter password : ")
 
@@ -20,6 +21,7 @@ class User:
         self.category_id = 0
         self.product_choice = 0
         self.id_of_selection = 0
+        self.id_of_substitute = 0
 
 
 displayed_categories = []
@@ -55,9 +57,10 @@ def CategorySelection(cursor):
         chunk_index += 1
 
 
-def ProductDisplay(cursor):
+def ProductSelection(cursor):
     global products_seen
-    mycursor.execute(f"SELECT Product_name, Product_id FROM Product_table WHERE Category_id = {userA.category_choice + products_seen}")
+    mycursor.execute(f"""SELECT Product_name, Product_id FROM Product_table
+    WHERE Category_id = {userA.category_choice + products_seen}""")
     result = mycursor.fetchall()
 
     chunk_index = 0
@@ -80,8 +83,45 @@ def ProductDisplay(cursor):
         chunk_index += 1
 
 
+def ResultSelection(cursor, origin_nutriscore, selection_c):
+    selected_category = selection_c[1]
+    mycursor.execute(f"""SELECT Product_id, Product_name, Nutriscore
+    FROM Product_table WHERE Nutriscore < '{origin_nutriscore}'
+    and Category_id = {selected_category}
+    ORDER BY Nutriscore ASC LIMIT 10;""")
+    comparison = mycursor.fetchall()
+    counter = 1
+
+    for product in comparison:
+        print(product[1], product[2], counter)
+        counter += 1
+
+    print("To save a comparison, select desired number (0 to skip)")
+    result_choice = int(input())
+
+    userA.id_of_substitute = comparison[result_choice - 1][0]
+    print(comparison[result_choice-1], userA.id_of_substitute,  "THIS IS THE PRINT YOU ARE LOOKING FOR")
+
+
+def SavedInsertion(cursor, origin_id, result_id, time):
+    print("INTO SaveInsert")
+    save = """INSERT INTO Saved_searches
+        (Origin_id , Result_id, Date_Saved)
+        VALUES(%s, %s, %s)"""
+    save_values = (origin_id, result_id, time)
+    cursor.execute(save, save_values)
+
+
+def ViewHistory(cursor):
+    cursor.execute("SELECT * FROM Saved_searches;")
+    history = cursor.fetchall
+    for line in history:
+        print(line)
+
+
 CategorySelection(mycursor)
-ProductDisplay(mycursor)
+ProductSelection(mycursor)
+
 
 print(displayed_categories)
 selection_c = displayed_categories[userA.category_choice + categories_seen - 1]
@@ -89,14 +129,20 @@ selection_p = displayed_products[userA.product_choice + products_seen - 1]
 print(selection_c, selection_p)
 userA.id_of_selection = selection_p[1]
 print(userA.id_of_selection)
-
-
-mycursor.execute(f"SELECT Nutriscore FROM Product_table WHERE Product_id = {userA.id_of_selection}")
+mycursor.execute(f"""SELECT Nutriscore FROM Product_table
+WHERE Product_id = {userA.id_of_selection}""")
 origin_nutriscore = mycursor.fetchall()
 origin_nutriscore = ''.join(origin_nutriscore[0])
 
-mycursor.execute(f"SELECT Product_name, Nutriscore FROM Product_table WHERE Nutriscore < '{origin_nutriscore}' and Category_id = {userA.category_choice + categories_seen}")
-comparison = mycursor.fetchall()
 
-for product in comparison:
-    print(product)
+print(selection_c[1])
+print(selection_p[1])
+print(userA.id_of_substitute, "ID OF SUB")
+
+if ResultSelection(mycursor, origin_nutriscore, selection_c) != 0:
+    now = datetime.datetime.utcnow()
+    SavedInsertion(mycursor, userA.id_of_selection, userA.id_of_substitute, now)
+
+cnx.commit()
+
+mycursor.close()

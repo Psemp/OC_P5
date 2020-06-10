@@ -42,13 +42,7 @@ CREATE TABLE IF NOT EXISTS `Project5_db`.`Product_table` (
   `Shortdesc` TEXT NULL,
   `PicUrl` TEXT NULL,
   PRIMARY KEY (`Product_id`),
-  UNIQUE INDEX `Product_id_UNIQUE` (`Product_id` ASC) VISIBLE,
-  INDEX `fk_category_id` (`Category_id` ASC) VISIBLE,
-  CONSTRAINT `fk_category_id`
-    FOREIGN KEY (`Category_id`)
-    REFERENCES `Project5_db`.`Category_table` (`Category_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `Product_id_UNIQUE` (`Product_id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -62,19 +56,7 @@ CREATE TABLE IF NOT EXISTS `Project5_db`.`Saved_searches` (
   `Result_id` BIGINT(13) UNSIGNED NOT NULL,
   `Origin_id` BIGINT(13) UNSIGNED NOT NULL,
   `Date_saved` DATETIME NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Saved_result_id` (`Result_id` ASC) INVISIBLE,
-  INDEX `fk_Saved_origin_id` (`Origin_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Saved_result_id`
-    FOREIGN KEY (`Result_id`)
-    REFERENCES `Project5_db`.`Product_table` (`Product_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Saved_origin_id`
-    FOREIGN KEY (`Origin_id`)
-    REFERENCES `Project5_db`.`Product_table` (`Product_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
