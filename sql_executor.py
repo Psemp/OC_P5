@@ -15,8 +15,7 @@ mycursor = cnx.cursor()
 
 def database_creation(cursor):
 
-    with open('db_creation_script.sql') as sql:
-        db_creation = sql.read()
+
 
     # cursor.execute(db_creation, multi=True)
 

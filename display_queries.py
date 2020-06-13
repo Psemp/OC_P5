@@ -1,35 +1,4 @@
-import mysql.connector
 import datetime
-
-# usr_pwd = input("Please enter password : ")
-
-# cnx = mysql.connector.connect(
-#     user='root',
-#     password=usr_pwd,
-#     host="localhost",
-#     database="Project5_db",
-#     auth_plugin='mysql_native_password'
-#     )
-
-# mycursor = cnx.cursor()
-
-
-# class User:
-
-#     def __init__(self):
-#         self.category_choice = 0
-#         self.category_id = 0
-#         self.product_choice = 0
-#         self.id_of_selection = 0
-#         self.id_of_substitute = 0
-
-
-# displayed_categories = []
-# displayed_products = []
-# display_limit = 10
-# userA = User()
-# categories_seen = 0
-# products_seen = 0
 
 
 def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen):
@@ -122,28 +91,6 @@ def ViewHistory(cursor):
     for line in history:
         print(line[1], line[2], line[3])
 
-
-
-# print(displayed_categories)
-# selection_c = displayed_categories[userA.category_choice + categories_seen - 1]
-# selection_p = displayed_products[userA.product_choice + products_seen - 1]
-# print(selection_c, selection_p)
-# userA.id_of_selection = selection_p[1]
-# print(userA.id_of_selection)
-# mycursor.execute(f"""SELECT Nutriscore FROM Product_table
-# WHERE Product_id = {userA.id_of_selection}""")
-# origin_nutriscore = mycursor.fetchall()
-# origin_nutriscore = ''.join(origin_nutriscore[0])
-
-
-# print(selection_c[1])
-# print(selection_p[1])
-# print(userA.id_of_substitute, "ID OF SUB")
-
 # if ResultSelection(mycursor, origin_nutriscore, selection_c) != 0:
 #     now = datetime.datetime.utcnow()
 #     SavedInsertion(mycursor, userA.id_of_selection, userA.id_of_substitute, now)
-
-# cnx.commit()
-
-# mycursor.close()

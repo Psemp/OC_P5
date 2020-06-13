@@ -1,5 +1,5 @@
 import mysql.connector
-import time
+import datetime
 # from sql_executor import database_creation
 from data_insertion import Insert_data
 from display_queries import CategorySelection, ProductSelection
@@ -49,9 +49,9 @@ if user_answer == 'y':
 
 userA = User()
 userA.category_choice = CategorySelection(mycursor, displayed_categories, userA.category_choice, userA.categories_seen)
-print(userA.category_choice) # Control
+print(userA.category_choice)  # Control
 userA.id_of_selection = ProductSelection(mycursor, userA.category_choice, displayed_products, userA.products_seen, userA.categories_seen)
-print(userA.id_of_selection) # Control
+print(userA.id_of_selection)    # Control
 selection_c = displayed_categories[userA.category_choice + userA.categories_seen - 1]
 print(selection_c)
 
