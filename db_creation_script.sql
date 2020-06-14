@@ -39,10 +39,10 @@ CREATE TABLE IF NOT EXISTS `Project5_db`.`Product_table` (
   `Stores` VARCHAR(100) NULL,
   `Nutriscore` ENUM('A', 'B', 'C', 'D', 'E') NOT NULL,
   `Category_id` INT UNSIGNED NOT NULL,
-  `Shortdesc` TEXT NULL,
-  `PicUrl` TEXT NULL,
+  `Url` TEXT NULL,
   PRIMARY KEY (`Product_id`),
-  UNIQUE INDEX `Product_id_UNIQUE` (`Product_id` ASC) VISIBLE)
+  UNIQUE INDEX `Product_id_UNIQUE` (`Product_id` ASC) VISIBLE,
+  INDEX `fk_category_id` (`Category_id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -56,7 +56,9 @@ CREATE TABLE IF NOT EXISTS `Project5_db`.`Saved_searches` (
   `Result_id` BIGINT(13) UNSIGNED NOT NULL,
   `Origin_id` BIGINT(13) UNSIGNED NOT NULL,
   `Date_saved` DATETIME NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  INDEX `fk_Saved_result_id` (`Result_id` ASC) INVISIBLE,
+  INDEX `fk_Saved_origin_id` (`Origin_id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 

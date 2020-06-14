@@ -3,13 +3,13 @@ import requests
 
 class Product:
 
-    def __init__(self, barcode, name, brand, nutriscore, img_url, stores):
+    def __init__(self, barcode, name, brand, nutriscore, url, stores):
         self.barcode = barcode
         self.name = name
         self.brand = brand
         self.nutriscore = nutriscore
         self.stores = stores
-        self.img_url = img_url
+        self.url = url
         self.category_id = []
 
 
@@ -106,8 +106,8 @@ for category in reversed(category_list):
                 if web_product['_id'] not in barcode_dict:
 
                     barcode_dict[web_product['_id']] = product_place_in_list
-                    if 'image_front_thumb_url' in web_product:
-                        product_list.append(Product(web_product['_id'], web_product['product_name'], web_product['brands'], web_product['nutriscore_grade'], web_product['image_front_thumb_url'], web_product['stores']))
+                    if 'url' in web_product:
+                        product_list.append(Product(web_product['_id'], web_product['product_name'], web_product['brands'], web_product['nutriscore_grade'], web_product['url'], web_product['stores']))
                         product_list[product_place_in_list].category_id.append(category.id)
                     else:
                         product_list.append(Product(web_product['_id'], web_product['product_name'], web_product['brands'], web_product['nutriscore_grade'], 'https://seashepherd.org', web_product['stores']))

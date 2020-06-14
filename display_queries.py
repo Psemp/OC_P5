@@ -1,5 +1,7 @@
 import datetime
 import webbrowser
+from input_regulation import InputChecker
+
 
 def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen):
     cursor.execute("SELECT Translated_name, Category_id FROM Category_table")
@@ -16,7 +18,8 @@ def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen)
             print(sublist[0], idientifier)
             displayed_categories.append(sublist)
             idientifier += 1
-        cat_choice = int(input("Select # (0 -> next page) : "))
+        # cat_choice = int(input("Select # (0 -> next page) : "))
+        cat_choice = InputChecker("ls_ind", 0, int(idientifier) - 1 , "Select # (0 -> next page) : ")
         if cat_choice != 0:
             cat_choice = cat_choice + categories_seen
             print(cat_choice)
@@ -44,7 +47,7 @@ def ProductSelection(cursor, cat_choice, displayed_products, products_seen, cate
             print(sublist[0], idientifier)
             displayed_products.append(sublist)
             idientifier += 1
-        prod_choice = int(input("Select category # (0 next) : "))
+        prod_choice = InputChecker("ls_ind", 0, int(idientifier) - 1, "Select Product # (0 -> next page) : ")
         if prod_choice != 0:
             selection_p = displayed_products[prod_choice + products_seen - 1]
             print(selection_p)
@@ -68,9 +71,9 @@ def ResultSelection(cursor, origin_nutriscore, selection_c):
         print(product[1], product[2], counter)
         counter += 1
 
-    print("To save a comparison, select desired number (0 to skip)")
+    result_text = "To save a comparison, select desired number (0 to skip)"
     result_choice = int(input())
-
+    result_choice = InputChecker("ls_ind", 0, int(counter) - 1, result_text)
     return comparison[result_choice - 1][0]
 
 

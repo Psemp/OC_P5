@@ -4,6 +4,7 @@ import datetime
 from data_insertion import Insert_data
 from display_queries import CategorySelection, ProductSelection
 from display_queries import ResultSelection, SavedInsertion, ViewHistory
+from input_regulation import InputChecker
 
 
 class User:
@@ -36,9 +37,16 @@ cnx = mysql.connector.connect(
 
 mycursor = cnx.cursor()
 user_exit = False
+print("Select History or comparison")
+input_message = "Do you want to see history ? (y/n)"
+choice = InputChecker("y_n", 'y', 'n', input_message)
 
-print("Recreate database ? (y/n)")
-user_answer = input()
+if choice == 'y':
+    ViewHistory(mycursor)
+
+
+input_message = "Recreate database ? (y/n)"
+user_answer = InputChecker("y_n", 'y', 'n', input_message)
 
 if user_answer == 'y':
     from request_script import product_list, category_list
@@ -68,10 +76,6 @@ choice = input("Save your research in database ? (y/n)")
 if choice == 'y':
     SavedInsertion(mycursor, userA.id_of_selection, userA.id_of_substitute)
 
-choice = input("Do you want to see history ? (y/n)")
-
-if choice == 'y':
-    ViewHistory(mycursor)
 
 cnx.commit()
 

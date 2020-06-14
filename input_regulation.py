@@ -1,10 +1,3 @@
-usage = ""
-var_a = 0
-var_b = 10
-rando_text = "test : "
-int(var_a)
-int(var_b)
-
 
 def InputChecker(usage, minimum, maximum, input_text):
     user_input = ""
@@ -19,6 +12,7 @@ def InputChecker(usage, minimum, maximum, input_text):
         return user_input
     if usage == "y_n":
         while valid_input is False:
+            user_input = input(input_text)
             if user_input == "y" or user_input == "n":
                 print("Fantastic, you can type")
                 valid_input = True  # Useless
@@ -39,9 +33,3 @@ def IntChecker(user_input, minimum, maximum):
             return int(user_input)
         except:
             print(error_message)
-
-
-usage = "ls_ind"
-
-result = InputChecker(usage, var_a, var_b, rando_text)
-print(result)

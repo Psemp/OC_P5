@@ -2,9 +2,9 @@
 def Insert_data(mycursor, ObjectList1, ObjectList2):
     for product in ObjectList1:
         product_insertion = """INSERT INTO Product_table
-        (Product_id , Product_name, Brand,Stores,PicUrl,Nutriscore,Category_id)
+        (Product_id , Product_name, Brand,Stores,Url,Nutriscore,Category_id)
         VALUES(%s, %s, %s, %s, %s, %s, %s)"""
-        product_values = (product.barcode, product.name, product.brand, product.stores, product.img_url, product.nutriscore, product.category_id[0])
+        product_values = (product.barcode, product.name, product.brand, product.stores, product.url, product.nutriscore, product.category_id[0])
         mycursor.execute(product_insertion, product_values)
 
     for category in ObjectList2:
