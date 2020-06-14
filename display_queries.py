@@ -1,5 +1,5 @@
 import datetime
-
+import webbrowser
 
 def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen):
     cursor.execute("SELECT Translated_name, Category_id FROM Category_table")
@@ -90,6 +90,11 @@ def ViewHistory(cursor):
     history = cursor.fetchall()
     for line in history:
         print(line[1], line[2], line[3])
+
+
+def ViewLink(url):
+
+    webbrowser.open(url, new=2, autoraise=True)
 
 # if ResultSelection(mycursor, origin_nutriscore, selection_c) != 0:
 #     now = datetime.datetime.utcnow()
