@@ -18,8 +18,8 @@ def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen)
             print(sublist[0], idientifier)
             displayed_categories.append(sublist)
             idientifier += 1
-        # cat_choice = int(input("Select # (0 -> next page) : "))
-        cat_choice = InputChecker("ls_ind", 0, int(idientifier) - 1 , "Select # (0 -> next page) : ")
+
+        cat_choice = InputChecker("ls_ind", 0, int(idientifier) - 1, "Select # (0 -> next page) : ")
         if cat_choice != 0:
             cat_choice = cat_choice + categories_seen
             print(cat_choice)
@@ -31,7 +31,6 @@ def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen)
 
 
 def ProductSelection(cursor, cat_choice, displayed_products, products_seen, categories_seen):
-    print("HELLO")
     cursor.execute(f"""SELECT Product_name, Product_id FROM Product_table
     WHERE Category_id = {cat_choice + categories_seen}""")
     print(cat_choice, categories_seen)
@@ -72,7 +71,7 @@ def ResultSelection(cursor, origin_nutriscore, selection_c):
         counter += 1
 
     result_text = "To save a comparison, select desired number (0 to skip)"
-    result_choice = int(input())
+    print(result_text)
     result_choice = InputChecker("ls_ind", 0, int(counter) - 1, result_text)
     return comparison[result_choice - 1][0]
 

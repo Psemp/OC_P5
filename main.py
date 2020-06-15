@@ -1,7 +1,8 @@
 import mysql.connector
+import sys
 from sql_executor import DatabaseCreation
 from data_insertion import Insert_data
-from display_queries import CategorySelection, ProductSelection
+from display_queries import CategorySelection, ProductSelection, ViewLink
 from display_queries import ResultSelection, SavedInsertion, ViewHistory
 from input_regulation import InputChecker
 
@@ -37,14 +38,14 @@ cnx = mysql.connector.connect(
 mycursor = cnx.cursor()
 user_exit = False
 print("Select History or comparison")
-input_message = "Do you want to see history ? (y/n)"
+input_message = "Do you want to see history ? (y/n) : "
 choice = InputChecker("y_n", 'y', 'n', input_message)
 
 if choice == 'y':
     ViewHistory(mycursor)
 
 
-input_message = "Recreate database ? (y/n)"
+input_message = "Recreate database ? (y/n) : "
 user_answer = InputChecker("y_n", 'y', 'n', input_message)
 
 if user_answer == 'y':
@@ -57,8 +58,12 @@ if user_answer == 'y':
 userA = User()
 userA.category_choice = CategorySelection(mycursor, displayed_categories, userA.category_choice, userA.categories_seen)
 print(userA.category_choice)  # Control
+if userA.category_choice is None:
+    sys.exit("No category Selected, terminating script")
 userA.id_of_selection = ProductSelection(mycursor, userA.category_choice, displayed_products, userA.products_seen, userA.categories_seen)
 print(userA.id_of_selection)  # Control
+if userA.id_of_selection is None:
+    sys.exit("No product Selected, terminating script")
 selection_c = displayed_categories[userA.category_choice + userA.categories_seen - 1]
 print(selection_c)
 
@@ -70,11 +75,20 @@ print(origin_nutriscore)  # Control
 
 userA.id_of_substitute = ResultSelection(mycursor, origin_nutriscore, selection_c)
 
-choice = input("Save your research in database ? (y/n)")
+input_message = "Do you want to open product link ? (y/n) :"
+choice = InputChecker("y_n", 'y', 'n', input_message)
 
 if choice == 'y':
-    SavedInsertion(mycursor, userA.id_of_selection, userA.id_of_substitute)
+    mycursor.execute(f"""SELECT Url FROM Product_table
+WHERE Product_id = {userA.id_of_substitute}""")
+    link = mycursor.fetchall()
+    link = ''.join(link[0])
+    ViewLink(link)
 
+input_message = "Save your research in database ? (y/n) :"
+choice = InputChecker("y_n", 'y', 'n', input_message)
+if choice == 'y':
+    SavedInsertion(mycursor, userA.id_of_selection, userA.id_of_substitute)
 
 cnx.commit()
 
