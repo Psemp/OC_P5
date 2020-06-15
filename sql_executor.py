@@ -1,30 +1,18 @@
-import mysql.connector
-
-usr_pwd = input("Please enter password : ")
-
-cnx = mysql.connector.connect(
-    user='root',
-    password=usr_pwd,
-    host="localhost",
-    database="Project5_db",
-    auth_plugin='mysql_native_password'
-    )
-
-mycursor = cnx.cursor()
+import re
 
 
-def database_creation(cursor):
+def DatabaseCreation(cursor):
+    with open('db_creation_script.sql', 'r') as sql:
+        statement = ""
 
-
-
-    # cursor.execute(db_creation, multi=True)
-
-    individual_commands = db_creation.split(';')
-
-    for command in individual_commands:
-        cursor.execute(command)
-    cnx.commit
-    mycursor.close()
-
-
-database_creation(mycursor)
+        for line in sql:
+            if re.findall("^-- ", line):
+                continue
+            if len(line) == 0:
+                continue
+            if not re.search(";$", line):
+                statement = statement + line
+            else:
+                statement = statement + line
+                cursor.execute(statement)
+                statement = ""

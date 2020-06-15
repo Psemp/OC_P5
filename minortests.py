@@ -7,7 +7,7 @@ import mysql.connector
 
 #     if re.match(r'--', line):
 #         continue
-#     if len(line) == 0:
+#     if len(line) ==0 :
 #         continue
 #     if not re.search(r';$', line):
 #         statement = statement + line
@@ -16,6 +16,10 @@ import mysql.connector
 #         # print(statement)
 
 #         statement = ""
+
+
+with open('db_creation_script.sql') as sql:
+    query = sql.read()
 
 usr_pwd = input("Please enter password : ")
 
@@ -30,43 +34,43 @@ cnx = mysql.connector.connect(
 
 mycursor = cnx.cursor()
 
-mycursor.execute("SELECT * FROM Saved_searches;")
-history = mycursor.fetchall()
+mycursor.execute(query, multi=True)
+# history = mycursor.fetchall()
 
-result_list = []
-origin_list = []
-
-for line in history:
-    id_r = line[1]
-    id_o = line[2]
-    mycursor.execute(f"""SELECT Product_name
-FROM Product_table
-INNER JOIN Saved_searches
-    ON Product_id = Result_id
-WHERE Product_table.Product_id = {id_r};""")
-    result_list.append(mycursor.fetchall())
-
-    mycursor.execute(f"""SELECT Product_name
-FROM Product_table
-INNER JOIN Saved_searches
-    ON Product_id = Origin_id
-WHERE Product_table.Product_id = {id_o};""")
-    origin_list.append(mycursor.fetchall())
+# result_list = []
+# origin_list = []
 
 # for line in history:
-#     print(line[0], line[1], line[2], line[3])
-
-# print(result_list)
-# print(origin_list)
-
-index = 0
-for sublist in result_list:
-    print(result_list[index], origin_list[index])
-    index += 1
-
-print(''.join((result_list[1][0])))
-# query = f"""SELECT Product_name
+#     id_r = line[1]
+#     id_o = line[2]
+#     mycursor.execute(f"""SELECT Product_name
 # FROM Product_table
 # INNER JOIN Saved_searches
 #     ON Product_id = Result_id
-# WHERE Product_table.Product_id = {id}"""
+# WHERE Product_table.Product_id = {id_r};""")
+#     result_list.append(mycursor.fetchall())
+
+#     mycursor.execute(f"""SELECT Product_name
+# FROM Product_table
+# INNER JOIN Saved_searches
+#     ON Product_id = Origin_id
+# WHERE Product_table.Product_id = {id_o};""")
+#     origin_list.append(mycursor.fetchall())
+
+# # for line in history:
+# #     print(line[0], line[1], line[2], line[3])
+
+# # print(result_list)
+# # print(origin_list)
+
+# index = 0
+# for sublist in result_list:
+#     print(result_list[index], origin_list[index])
+#     index += 1
+
+# print(''.join((result_list[1][0])))
+# # query = f"""SELECT Product_name
+# # FROM Product_table
+# # INNER JOIN Saved_searches
+# #     ON Product_id = Result_id
+# # WHERE Product_table.Product_id = {id}"""

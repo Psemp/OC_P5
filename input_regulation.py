@@ -14,7 +14,6 @@ def InputChecker(usage, minimum, maximum, input_text):
         while valid_input is False:
             user_input = input(input_text)
             if user_input == "y" or user_input == "n":
-                print("Fantastic, you can type")
                 valid_input = True  # Useless
                 return user_input
             else:
@@ -31,5 +30,5 @@ def IntChecker(user_input, minimum, maximum):
             type_check = True
             print("yay")
             return int(user_input)
-        except:
+        except TypeError:
             print(error_message)
