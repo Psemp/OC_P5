@@ -3,7 +3,8 @@ import sys
 from sql_executor import DatabaseCreation
 from data_insertion import Insert_data
 from display_queries import CategorySelection, ProductSelection, ViewLink
-from display_queries import ResultSelection, SavedInsertion, ViewHistory
+from display_queries import ResultSelection, SavedInsertion
+from history import ViewHistory
 from input_regulation import InputChecker
 
 
@@ -54,18 +55,16 @@ if user_answer == 'y':
     Insert_data(mycursor, product_list, category_list)
     mycursor.execute("""DELETE FROM Product_table
     WHERE Product_id < 1000000000000""")
+    print("\n" * 10)
 
 userA = User()
 userA.category_choice = CategorySelection(mycursor, displayed_categories, userA.category_choice, userA.categories_seen)
-print(userA.category_choice)  # Control
 if userA.category_choice is None:
     sys.exit("No category Selected, terminating script")
 userA.id_of_selection = ProductSelection(mycursor, userA.category_choice, displayed_products, userA.products_seen, userA.categories_seen)
-print(userA.id_of_selection)  # Control
 if userA.id_of_selection is None:
     sys.exit("No product Selected, terminating script")
 selection_c = displayed_categories[userA.category_choice + userA.categories_seen - 1]
-print(selection_c)
 
 mycursor.execute(f"""SELECT Nutriscore FROM Product_table
 WHERE Product_id = {userA.id_of_selection}""")

@@ -14,15 +14,15 @@ def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen)
     for chunk in sublist_categories:
 
         idientifier = 1
+        print("")
         for sublist in sublist_categories[chunk_index]:
             print(sublist[0], idientifier)
             displayed_categories.append(sublist)
             idientifier += 1
-
+        print("")
         cat_choice = InputChecker("ls_ind", 0, int(idientifier) - 1, "Select # (0 -> next page) : ")
         if cat_choice != 0:
             cat_choice = cat_choice + categories_seen
-            print(cat_choice)
             return cat_choice
         else:
             categories_seen += 10
@@ -33,19 +33,19 @@ def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen)
 def ProductSelection(cursor, cat_choice, displayed_products, products_seen, categories_seen):
     cursor.execute(f"""SELECT Product_name, Product_id FROM Product_table
     WHERE Category_id = {cat_choice + categories_seen}""")
-    print(cat_choice, categories_seen)
     result = cursor.fetchall()
-    print(result)
     chunk_index = 0
 
     sublist_producuts = [result[x:x+10] for x in range(0, len(result), 10)]
 
     for chunk in sublist_producuts:
         idientifier = 1
+        print("")
         for sublist in sublist_producuts[chunk_index]:
             print(sublist[0], idientifier)
             displayed_products.append(sublist)
             idientifier += 1
+        print("")
         prod_choice = InputChecker("ls_ind", 0, int(idientifier) - 1, "Select Product # (0 -> next page) : ")
         if prod_choice != 0:
             selection_p = displayed_products[prod_choice + products_seen - 1]
@@ -53,7 +53,6 @@ def ProductSelection(cursor, cat_choice, displayed_products, products_seen, cate
             return selection_p[1]
         else:
             products_seen += 10
-        print('end of list')
         chunk_index += 1
 
 
@@ -71,23 +70,21 @@ def ResultSelection(cursor, origin_nutriscore, selection_c):
         counter += 1
 
     result_text = "To save a comparison, select desired number (0 to skip)"
-    print(result_text)
     result_choice = InputChecker("ls_ind", 0, int(counter) - 1, result_text)
     return comparison[result_choice - 1][0]
 
 
 def SavedInsertion(cursor, origin_id, result_id):
     now = datetime.datetime.utcnow()
-    print("INTO SaveInsert")
+    print("Result Saved")
     save = """INSERT INTO Saved_searches
         (Origin_id , Result_id, Date_Saved)
         VALUES(%s, %s, %s)"""
     save_values = (origin_id, result_id, now)
-    print(origin_id, result_id, now)
     cursor.execute(save, save_values)
 
 
-def ViewHistory(cursor):
+def SaveDisplay(cursor):
     cursor.execute("SELECT * FROM Saved_searches;")
     history = cursor.fetchall()
     for line in history:
@@ -97,7 +94,3 @@ def ViewHistory(cursor):
 def ViewLink(url):
 
     webbrowser.open(url, new=2, autoraise=True)
-
-# if ResultSelection(mycursor, origin_nutriscore, selection_c) != 0:
-#     now = datetime.datetime.utcnow()
-#     SavedInsertion(mycursor, userA.id_of_selection, userA.id_of_substitute, now)

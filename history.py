@@ -1,19 +1,3 @@
-import mysql.connector
-
-usr_pwd = input("Please enter password : ")
-
-cnx = mysql.connector.connect(
-    user='root',
-    password=usr_pwd,
-    host="localhost",
-    passwd=usr_pwd,
-    database="Project5_db",
-    auth_plugin='mysql_native_password'
-    )
-
-mycursor = cnx.cursor()
-
-
 def ViewHistory(cursor):
     from display_queries import ViewLink
     from input_regulation import InputChecker
@@ -42,7 +26,7 @@ def ViewHistory(cursor):
     cursor.execute("SELECT * FROM Saved_searches;")
     history = cursor.fetchall()
     for line in history:
-        comparison_list.append(Comparison(line[1], line[2], line[3], mycursor))
+        comparison_list.append(Comparison(line[1], line[2], line[3], cursor))
 
     identifier = 1
     for comp in comparison_list:
@@ -60,11 +44,8 @@ def ViewHistory(cursor):
     choice = InputChecker("y_n", 'y', 'n', input_message)
 
     if choice == 'y':
-        mycursor.execute(f"""SELECT Url FROM Product_table
+        cursor.execute(f"""SELECT Url FROM Product_table
         WHERE Product_id = {comparison_list[user_input - 1].r_id}""")
-        link = mycursor.fetchall()
+        link = cursor.fetchall()
         link = ''.join(link[0])
         ViewLink(link)
-
-
-ViewHistory(mycursor)

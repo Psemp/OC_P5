@@ -75,7 +75,6 @@ for web_category in category_page['tags']:
     if FiltersOnProductCnt(web_category['products']) and FiltersOnId(web_category['id']) and FilterOnTranslation(web_category['name']):
         category_list.append(Category(web_category['id'], web_category['name'], web_category['url'], web_category['products']))
 
-print('checkpoint1')
 idgen = 1
 
 for category in category_list:
@@ -83,7 +82,7 @@ for category in category_list:
     idgen += 1
 
 product_place_in_list = 0
-barcode_dict = {}  # {barcode, product_place_in_list}
+barcode_dict = {}
 
 for category in reversed(category_list):
 
@@ -91,15 +90,13 @@ for category in reversed(category_list):
     products_analyzed = 0
     user_defined_limit = 100
 
-    while page_api < 3:  # (category.amount/20):
+    while page_api < 4:  # (category.amount/20):
         formatted_url = category.link + f'/{page_api}.json'
         r = requests.get(formatted_url)
         productlist_page = r.json()
-        # print('checkpoint2')
         print(formatted_url)
 
         for web_product in productlist_page['products']:
-            # print('checkpoint3')
 
             if SectionsInProduct(web_product) and BarcodeTest:
 
@@ -115,19 +112,8 @@ for category in reversed(category_list):
                     product_place_in_list += 1
 
                 else:
-                    # product_list[product_place_in_list].category_id.append(category.id)
+
                     pass
                 products_analyzed += 1
 
-            # print('checkpoint4')
         page_api += 1
-
-        # print('checkpoint5')
-
-for product in product_list:
-    print(product.name)
-
-print(len(category_list))
-
-for category in category_list:
-    print(category.web_id, category.link, category.id)
