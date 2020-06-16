@@ -15,7 +15,7 @@ mycursor = cnx.cursor()
 
 
 def ViewHistory(cursor):
-
+    from display_queries import ViewLink
     from input_regulation import InputChecker
 
     class Comparison:
@@ -46,17 +46,25 @@ def ViewHistory(cursor):
 
     identifier = 1
     for comp in comparison_list:
-        print(f"{comp.r_name} is healthier than {comp.o_name} Saved on {comp.date}",
-    " !! Identifier : ", identifier)
+        print(f"{comp.r_name} <<healthier than>> {comp.o_name} Saved on {comp.date}",
+    " !! Identifier :", identifier)
         identifier += 1
 
     input_text = "To know more about saved result, enter its identfier"
     user_input = InputChecker("ls_ind", 1, identifier - 1, input_text)
-    print(f"{comparison_list[user_input].r_name} : Brand is {comparison_list[user_input].r_brand}")
-    if len(comparison_list[user_input].r_stores) > 1:
-        print(f"You can purchase it in {comparison_list[user_input].r_stores}")
+    print(f"{comparison_list[user_input - 1].r_name} : Brand is {comparison_list[user_input - 1].r_brand}")
+    if len(comparison_list[user_input - 1].r_stores) > 1:
+        print(f"You can purchase it in {comparison_list[user_input - 1].r_stores}")
 
-    # Ask user if he wants the honor to visit OFF page of product
+    input_message = "Do you want to open product link ? (y/n) :"
+    choice = InputChecker("y_n", 'y', 'n', input_message)
+
+    if choice == 'y':
+        mycursor.execute(f"""SELECT Url FROM Product_table
+        WHERE Product_id = {comparison_list[user_input - 1].r_id}""")
+        link = mycursor.fetchall()
+        link = ''.join(link[0])
+        ViewLink(link)
     # Refine User input
     # Profit
 
