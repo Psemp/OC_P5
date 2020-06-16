@@ -4,6 +4,7 @@ def InputChecker(usage, minimum, maximum, input_text):
     valid_input = False
     if usage == "ls_ind":
         while valid_input is False:
+            print(input_text)
             user_input = IntChecker(user_input, minimum, maximum)
             if user_input >= minimum and user_input <= maximum:
                 return user_input
