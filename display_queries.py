@@ -26,7 +26,6 @@ def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen)
             return cat_choice
         else:
             categories_seen += 10
-        print('end of list')
         chunk_index += 1
 
 

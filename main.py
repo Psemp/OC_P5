@@ -55,7 +55,7 @@ if user_answer == 'y':
     Insert_data(mycursor, product_list, category_list)
     mycursor.execute("""DELETE FROM Product_table
     WHERE Product_id < 1000000000000""")
-    print("\n" * 10)
+    print("\n" * 2s0)
 
 userA = User()
 userA.category_choice = CategorySelection(mycursor, displayed_categories, userA.category_choice, userA.categories_seen)
