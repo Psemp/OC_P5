@@ -62,6 +62,9 @@ def ResultSelection(cursor, origin_nutriscore, selection_c):
     and Category_id = {selected_category}
     ORDER BY Nutriscore ASC LIMIT 10;""")
     comparison = cursor.fetchall()
+    if len(comparison) == 0:
+        print('No comparison found, sorry')
+        return
     counter = 1
 
     for product in comparison:

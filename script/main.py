@@ -70,9 +70,11 @@ mycursor.execute(f"""SELECT Nutriscore FROM Product_table
 WHERE Product_id = {userA.id_of_selection}""")
 origin_nutriscore = mycursor.fetchall()
 origin_nutriscore = ''.join(origin_nutriscore[0])
-print(origin_nutriscore)  # Control
 
 userA.id_of_substitute = ResultSelection(mycursor, origin_nutriscore, selection_c)
+
+if userA.id_of_substitute is None:
+    sys.exit("No substitude Selected/Detected, terminating script")
 
 input_message = "Do you want to open product link ? (y/n) :"
 choice = InputChecker("y_n", 'y', 'n', input_message)
@@ -88,6 +90,15 @@ input_message = "Save your research in database ? (y/n) :"
 choice = InputChecker("y_n", 'y', 'n', input_message)
 if choice == 'y':
     SavedInsertion(mycursor, userA.id_of_selection, userA.id_of_substitute)
+
+
+def HistoryCheck(cursor):
+    cursor.execute('SELECT * FROM Saved_searches')
+    history = cursor.fetchall()
+    print(history, len(history))
+    if len(history) == 0:
+        print('nope')
+
 
 cnx.commit()
 

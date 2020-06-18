@@ -25,6 +25,10 @@ def ViewHistory(cursor):
     comparison_list = []
     cursor.execute("SELECT * FROM Saved_searches;")
     history = cursor.fetchall()
+    if len(history) == 0:
+        print("No comparison saved in database - Skipping")
+        return
+
     for line in history:
         comparison_list.append(Comparison(line[1], line[2], line[3], cursor))
 
