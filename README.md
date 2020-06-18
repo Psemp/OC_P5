@@ -17,14 +17,15 @@ Typical usage of the software should start with the selection of a category : --
 
 Normal Pathway = 
 
+- System asks if the user wants to see history first, if yes, user should be able to see all products saved and select a specific comparison
 - User creates the database locally using the API Scraping script. It should take anywhere between 5 minutes and 3 decades depending on how many pages the user wants to include.
 - User now selects a category in which he wants to search a specific product to compare. Using numbers from 0 to 10 (0 to change page).
 - System displays product of selected category, user selects a product he wishes to compare using the same method as the categories.
-- System returns all products qualified healthier based on their nutriscore (A = Good, E = Worst). System will order the results so the healthier products are shown first
+- System returns all products qualified healthier based on their nutriscore (A = Best, E = Worst). System will order the results so the healthier products are shown first
+- System prompts the user for a choice to see selected product in OFF website (if yes -> new tab in default browser)
 - User has the choice to save his search to find it later if he wishes
 
 
 # Project Status
 
-Under development, more bugs than Skyrim
-Main functions are working somewhat properly but many details needs to be added : ShortDesc and Pictures for products ; a mean of saving searches ; a better way of navigating the databases and other details like more accurate SQL queries (Ordering results etc.)
+Project is almost done, main functions are all working as expected. Room for improvement
