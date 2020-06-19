@@ -9,11 +9,11 @@ If the user finds a suitable substitute and wants to keep it in the database to 
 # Installation
 
 Softwares and scritps are written using Python 3.7 or 3.8 and MySQL 8.0.something.
-Used librairies are in requirements.txt (note to self : create requirements.txt)
+Used librairies are in requirements.txt
 
 # Usage
 
-Typical usage of the software should start with the selection of a category : -->
+Typical usage of the software should start with the selection of a category or history access : -->
 
 Normal Pathway = 
 
