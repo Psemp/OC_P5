@@ -15,19 +15,6 @@ CREATE SCHEMA IF NOT EXISTS `Project5_db` DEFAULT CHARACTER SET utf8 ;
 USE `Project5_db` ;
 
 -- -----------------------------------------------------
--- Table `Project5_db`.`Category_table`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `Project5_db`.`Category_table` ;
-
-CREATE TABLE IF NOT EXISTS `Project5_db`.`Category_table` (
-  `Category_id` INT UNSIGNED NOT NULL,
-  `Category_name` VARCHAR(50) NOT NULL,
-  `Translated_name` VARCHAR(45) NULL,
-  PRIMARY KEY (`Category_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `Project5_db`.`Product_table`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Project5_db`.`Product_table` ;
@@ -41,8 +28,20 @@ CREATE TABLE IF NOT EXISTS `Project5_db`.`Product_table` (
   `Category_id` INT UNSIGNED NOT NULL,
   `Url` TEXT NULL,
   PRIMARY KEY (`Product_id`),
-  UNIQUE INDEX `Product_id_UNIQUE` (`Product_id` ASC) VISIBLE,
-  INDEX `fk_category_id` (`Category_id` ASC) VISIBLE)
+  UNIQUE INDEX `Product_id_UNIQUE` (`Product_id` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Project5_db`.`Category_table`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Project5_db`.`Category_table` ;
+
+CREATE TABLE IF NOT EXISTS `Project5_db`.`Category_table` (
+  `Category_id` INT UNSIGNED NOT NULL,
+  `Category_name` VARCHAR(50) NOT NULL,
+  `Translated_name` VARCHAR(45) NULL,
+  PRIMARY KEY (`Category_id`))
 ENGINE = InnoDB;
 
 
@@ -56,9 +55,7 @@ CREATE TABLE IF NOT EXISTS `Project5_db`.`Saved_searches` (
   `Result_id` BIGINT(13) UNSIGNED NOT NULL,
   `Origin_id` BIGINT(13) UNSIGNED NOT NULL,
   `Date_saved` DATETIME NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Saved_result_id` (`Result_id` ASC) INVISIBLE,
-  INDEX `fk_Saved_origin_id` (`Origin_id` ASC) VISIBLE)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
