@@ -87,7 +87,6 @@ barcode_dict = {}
 for category in reversed(category_list):
 
     page_api = 1
-    products_analyzed = 0
     user_defined_limit = 100
 
     while page_api < 4:  # (category.amount/20):
@@ -114,6 +113,5 @@ for category in reversed(category_list):
                 else:
 
                     pass
-                products_analyzed += 1
 
         page_api += 1

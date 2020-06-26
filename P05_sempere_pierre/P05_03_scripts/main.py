@@ -37,7 +37,6 @@ cnx = mysql.connector.connect(
     )
 
 mycursor = cnx.cursor()
-user_exit = False
 print("Select History or comparison")
 input_message = "Do you want to see history ? (y/n) : "
 choice = InputChecker("y_n", 'y', 'n', input_message)
@@ -46,8 +45,8 @@ if choice == 'y':
     ViewHistory(mycursor)
 
 
-input_message = "Recreate database ? (y/n) : "
-user_answer = InputChecker("y_n", 'y', 'n', input_message)
+print("Recreate database ? (y/n) : ")
+user_answer = input()
 
 if user_answer == 'y':
     from request_script import product_list, category_list
@@ -56,6 +55,7 @@ if user_answer == 'y':
     mycursor.execute("""DELETE FROM Product_table
     WHERE Product_id < 1000000000000""")
     print("\n" * 20)
+
 
 userA = User()
 userA.category_choice = CategorySelection(mycursor, displayed_categories, userA.category_choice, userA.categories_seen)

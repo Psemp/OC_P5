@@ -17,3 +17,6 @@ def Insert_data(mycursor, ObjectList1, ObjectList2):
     mycursor.execute("""ALTER TABLE Product_table
     ADD CONSTRAINT fk_category_id FOREIGN KEY (category_id)
     REFERENCES Category_table(Category_id);""")
+
+    #  I have no idea why but the insertion fails if the constraint is not
+    #  added, so i'll just leave it here

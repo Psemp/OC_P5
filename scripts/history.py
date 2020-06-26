@@ -34,8 +34,7 @@ def ViewHistory(cursor):
 
     identifier = 1
     for comp in comparison_list:
-        print(f"{comp.r_name} <<Healthier Than>> {comp.o_name} Saved on {comp.date}",
-    " !! Identifier =", identifier)
+        print(f"{comp.r_name} <<Healthier Than>> {comp.o_name} Saved on {comp.date}", " !! Identifier =", identifier)
         identifier += 1
 
     input_text = "To know more about saved result, enter its identfier"
