@@ -1,27 +1,6 @@
 import requests
-
-
-class Product:
-
-    def __init__(self, barcode, name, brand, nutriscore, url, stores):
-        self.barcode = barcode
-        self.name = name
-        self.brand = brand
-        self.nutriscore = nutriscore
-        self.stores = stores
-        self.url = url
-        self.category_id = []
-
-
-class Category:
-
-    def __init__(self, web_id, name, link, amount):
-        self.web_id = web_id
-        self.display_name = name
-        self.link = link
-        self.amount = amount
-        self.id = 0
-
+from models.category import Category
+from models.product import Product
 
 product_list = []
 category_list = []

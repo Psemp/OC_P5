@@ -1,7 +1,7 @@
 def ViewHistory(cursor):
-    from display_queries import ViewLink
-    from input_regulation import InputChecker
-    from comparison import Comparison
+    from management.display_queries import ViewLink
+    from functions.input_regulation import InputChecker
+    from models.comparison import Comparison
 
     comparison_list = []
     cursor.execute("SELECT * FROM Saved_searches;")

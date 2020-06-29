@@ -2,7 +2,7 @@ import re
 
 
 def DatabaseCreation(cursor):
-    with open('db_creation_script.sql', 'r') as sql:
+    with open('resources/db_creation_script.sql', 'r') as sql:
         statement = ""
 
         for line in sql:

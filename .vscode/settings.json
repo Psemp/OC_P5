@@ -1,6 +1,5 @@
 {
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true,
-    "python.pythonPath": "c:\\Users\\Pierre Sempere\\Documents\\OC_P5\\env\\Scripts\\python.exe"
+    "python.linting.enabled": true
 }

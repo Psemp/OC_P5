@@ -1,6 +1,6 @@
 import datetime
 import webbrowser
-from input_regulation import InputChecker
+from functions.input_regulation import InputChecker
 
 
 def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen):
@@ -84,13 +84,6 @@ def SavedInsertion(cursor, origin_id, result_id):
         VALUES(%s, %s, %s)"""
     save_values = (origin_id, result_id, now)
     cursor.execute(save, save_values)
-
-
-def SaveDisplay(cursor):
-    cursor.execute("SELECT * FROM Saved_searches;")
-    history = cursor.fetchall()
-    for line in history:
-        print(line[1], line[2], line[3])
 
 
 def ViewLink(url):
