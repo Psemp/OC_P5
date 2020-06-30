@@ -47,7 +47,7 @@ user_answer = InputChecker("y_n", 'y', 'n', input_message)
 if user_answer == 'y':
     from functions.request_script import product_list, category_list
     DatabaseCreation(mycursor)
-    Insert_data(mycursor, product_list, category_list)
+    Insert_data(mycursor, category_list, product_list, cnx)
     mycursor.execute("""DELETE FROM Product_table
     WHERE Product_id < 1000000000000""")
     print("\n" * 20)
