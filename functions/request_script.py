@@ -68,7 +68,7 @@ for category in reversed(category_list):
     page_api = 1
     user_defined_limit = 100
 
-    while page_api < 2:  # (category.amount/20):
+    while page_api < 4:  # (category.amount/20):
         formatted_url = category.link + f'/{page_api}.json'
         r = requests.get(formatted_url)
         productlist_page = r.json()
