@@ -4,7 +4,7 @@ from functions.input_regulation import InputChecker
 
 
 def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen):
-    cursor.execute("SELECT Translated_name, Category_id FROM Category_table")
+    cursor.execute("SELECT Translated_name FROM Category_table")
     result = cursor.fetchall()
 
     chunk_index = 0
@@ -23,15 +23,18 @@ def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen)
         cat_choice = InputChecker("ls_ind", 0, int(idientifier) - 1, "Select # (0 -> next page) : ")
         if cat_choice != 0:
             cat_choice = cat_choice + categories_seen
-            return cat_choice
+            return result[cat_choice - 1]
         else:
             categories_seen += 10
         chunk_index += 1
 
 
-def ProductSelection(cursor, cat_choice, displayed_products, products_seen, categories_seen):
-    cursor.execute(f"""SELECT Product_name, Product_id FROM Product_table
-    WHERE Category_id = {cat_choice + categories_seen}""")
+def ProductSelection(cursor, cat_choice, displayed_products, products_seen):
+    cursor.execute(f"""SELECT Product_name, Product_id
+    FROM Product_table
+    INNER JOIN Category_table
+        ON Category_table.Category_id = Product_table.Category_id
+    WHERE Category_table.Translated_Name = '{cat_choice}'""")
     result = cursor.fetchall()
     chunk_index = 0
 

@@ -54,6 +54,7 @@ if user_answer == 'y':
 
 
 u_category_choice = CategorySelection(mycursor, displayed_categories, u_category_choice, u_categories_seen)
+u_category_choice = ''.join(u_category_choice[0])
 if u_category_choice is None:
     sys.exit("No category Selected, terminating script")
 u_id_of_selection = ProductSelection(mycursor, u_category_choice, displayed_products, u_products_seen, u_categories_seen)
