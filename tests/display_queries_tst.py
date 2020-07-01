@@ -30,7 +30,7 @@ def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen)
 
 
 def ProductSelection(cursor, cat_choice, displayed_products, products_seen):
-    cursor.execute(f"""SELECT Product_name, Product_id, Category_id
+    cursor.execute(f"""SELECT Product_name, Product_id, Product_table.Category_id, Nutriscore
     FROM Product_table
     INNER JOIN Category_table
         ON Category_table.Category_id = Product_table.Category_id
@@ -52,17 +52,16 @@ def ProductSelection(cursor, cat_choice, displayed_products, products_seen):
         if prod_choice != 0:
             selection_p = displayed_products[prod_choice + products_seen - 1]
             print(selection_p)
-            return selection_p[1]
+            return selection_p
         else:
             products_seen += 10
         chunk_index += 1
 
 
 def ResultSelection(cursor, origin_nutriscore, selection_c):
-    selected_category = selection_c[1]
     cursor.execute(f"""SELECT Product_id, Product_name, Nutriscore
     FROM Product_table WHERE Nutriscore < '{origin_nutriscore}'
-    and Category_id = {selected_category}
+    and Category_id = {selection_c}
     ORDER BY Nutriscore ASC LIMIT 10;""")
     comparison = cursor.fetchall()
     if len(comparison) == 0:

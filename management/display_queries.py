@@ -30,7 +30,7 @@ def CategorySelection(cursor, displayed_categories, cat_choice, categories_seen)
 
 
 def ProductSelection(cursor, cat_choice, displayed_products, products_seen):
-    cursor.execute(f"""SELECT Product_name, Product_id
+    cursor.execute(f"""SELECT Product_name, Product_id, Product_table.Category_id, Nutriscore
     FROM Product_table
     INNER JOIN Category_table
         ON Category_table.Category_id = Product_table.Category_id
@@ -51,18 +51,16 @@ def ProductSelection(cursor, cat_choice, displayed_products, products_seen):
         prod_choice = InputChecker("ls_ind", 0, int(idientifier) - 1, "Select Product # (0 -> next page) : ")
         if prod_choice != 0:
             selection_p = displayed_products[prod_choice + products_seen - 1]
-            print(selection_p)
-            return selection_p[1]
+            return selection_p
         else:
             products_seen += 10
         chunk_index += 1
 
 
 def ResultSelection(cursor, origin_nutriscore, selection_c):
-    selected_category = selection_c[1]
     cursor.execute(f"""SELECT Product_id, Product_name, Nutriscore
     FROM Product_table WHERE Nutriscore < '{origin_nutriscore}'
-    and Category_id = {selected_category}
+    and Category_id = {selection_c}
     ORDER BY Nutriscore ASC LIMIT 10;""")
     comparison = cursor.fetchall()
     if len(comparison) == 0:
@@ -74,9 +72,14 @@ def ResultSelection(cursor, origin_nutriscore, selection_c):
         print(product[1], product[2], counter)
         counter += 1
 
+    print('\n')
     result_text = "To save a comparison, select desired number (0 to skip)"
     result_choice = InputChecker("ls_ind", 0, int(counter) - 1, result_text)
-    return comparison[result_choice - 1][0]
+    print(result_choice)
+    if result_choice == 0:
+        return 0
+    else:
+        return comparison[result_choice - 1][0]
 
 
 def SavedInsertion(cursor, origin_id, result_id):

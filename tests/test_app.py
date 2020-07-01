@@ -1,5 +1,7 @@
 import mysql.connector
-from display_queries_tst import CategorySelection, ProductSelection
+from display_queries_tst import CategorySelection, ProductSelection, ResultSelection
+from db_creation_test import DatabaseCreation
+# from request_script import product_list, category_list
 
 usr_pwd = input("Please enter password : ")
 
@@ -17,7 +19,7 @@ mycursor = cnx.cursor()
 u_category_choice = 0
 u_category_id = 0
 u_product_choice = 0
-u_id_of_selection = 0
+u_selection = 0
 u_id_of_substitute = 0
 u_products_seen = 0
 u_categories_seen = 0
@@ -47,10 +49,16 @@ def Insert_data(mycursor, ObjectList1, ObjectList2):
     cnx.commit()
 
 
+# DatabaseCreation(mycursor)
+# Insert_data(mycursor, product_list, category_list)
 # print(type(CategorySelection(mycursor, displayed_categories, u_category_choice, u_categories_seen)))
-print(CategorySelection(mycursor, displayed_categories, u_category_choice, u_categories_seen))
-# u_category_choice = CategorySelection(mycursor, displayed_categories, u_category_choice, u_categories_seen)
+# print(CategorySelection(mycursor, displayed_categories, u_category_choice, u_categories_seen))
+u_category_choice = CategorySelection(mycursor, displayed_categories, u_category_choice, u_categories_seen)
 # print(u_category_choice)
-# u_category_choice = ''.join(u_category_choice[0])
-# print(u_category_choice)
+u_category_choice = ''.join(u_category_choice[0])
+print(u_category_choice)
 # print(ProductSelection(mycursor, u_category_choice, displayed_products, u_products_seen))
+u_selection = ProductSelection(mycursor, u_category_choice, displayed_products, u_products_seen)
+print(u_selection[2], u_selection[0])
+print('\n'*3)
+print(ResultSelection(mycursor, u_selection[3], u_selection[2]))

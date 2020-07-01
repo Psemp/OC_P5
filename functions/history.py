@@ -15,16 +15,17 @@ def ViewHistory(cursor):
 
     identifier = 1
     for comp in comparison_list:
-        print(f"{comp.r_name} <<Healthier Than>> {comp.o_name} Saved on {comp.date}", " !! Identifier =", identifier)
+        print(f"{comp.r_name} <<Healthier Than>> {comp.o_name} SAVED ON {comp.date}", " !! Identifier =", identifier)
         identifier += 1
 
+    print('\n')
     input_text = "To know more about saved result, enter its identfier"
     user_input = InputChecker("ls_ind", 1, identifier - 1, input_text)
     print(f"{comparison_list[user_input - 1].r_name} : Brand is {comparison_list[user_input - 1].r_brand}")
     if len(comparison_list[user_input - 1].r_stores) > 1:
         print(f"You can purchase it in {comparison_list[user_input - 1].r_stores}")
 
-    input_message = "Do you want to open product link ? (y/n) :"
+    input_message = "Do you want to open product link ? (y/n) : "
     choice = InputChecker("y_n", 'y', 'n', input_message)
 
     if choice == 'y':
